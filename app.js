@@ -96,6 +96,34 @@ async function handleResponses(action, queryText, outputContexts) {
     })
 }
 
+async function detectIntent(projectId, sessionId, query, contexts, languageCode) {
+    // The path to identify the agent that owns the created intent.
+    const sessionPath = sessionClient.projectAgentSessionPath(
+        projectId,
+        sessionId
+    );
+
+    // The text query request.
+    const request = {
+        session: sessionPath,
+        queryInput: {
+            text: {
+                text: query,
+                languageCode: languageCode,
+            },
+        },
+    };
+
+    if (contexts && contexts.length > 0) {
+        request.queryParams = {
+            contexts: contexts,
+        };
+    }
+
+    console.log(request)
+    const responses = await sessionClient.detectIntent(request);
+    return responses[0];
+}
 
 let port = process.env.PORT;
 if (port == null || port == "") {
