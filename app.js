@@ -5,6 +5,9 @@ const uuid = require('uuid');
 const projectId = "teste-dialogflow-avdj"
 const languageCode = 'pt-br';
 
+// Instantiates a session client
+const sessionClient = new dialogflow.SessionsClient();
+
 var app = express();
 
 const server = require('http').createServer(app);
