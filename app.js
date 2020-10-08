@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const uuid = require('uuid');
 
 var app = express();
 
@@ -57,6 +58,24 @@ app.post('/webhook', async function (req, res, next) {
         return next(err)
     }
 });
+
+app.post("/dialogflow/query/", async (req, res, next) => {
+    try {
+        let { queryText, sessionId, contexts } = req.body
+        sessionId = (!sessionId) ? uuid.v4() : sessionId
+        contexts = (!contexts) ? [] : JSON.parse(contexts)
+
+        console.log("***********************")
+        console.log(sessionId, queryText, contexts)
+        console.log("***********************")
+
+        let response = await detectIntent(projectId, sessionId, queryText, contexts, languageCode)
+        res.status(200).json({ response, sessionId })
+
+    } catch (err) {
+        return next(err)
+    }
+})
 
 async function handleResponses(action, queryText, outputContexts) {
     return new Promise(async (resolve, reject) => {
