@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 var app = express();
 
@@ -7,6 +8,9 @@ const server = require('http').createServer(app);
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.static('views'));
+app.use(bodyParser.json({ limit: '50mb' }))
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.text({ limit: '50mb' }));
 
 app.get('/',(req, res)=>{
     res.render('index')
