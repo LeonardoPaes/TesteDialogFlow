@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
 
+const projectId = "teste-dialogflow-avdj"
+const languageCode = 'pt-br';
+
 var app = express();
 
 const server = require('http').createServer(app);
