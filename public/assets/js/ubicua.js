@@ -24,7 +24,7 @@ function dialogflowQuery(queryText, agent) {
         // Executa AJAX
         $.ajax({
             type: 'POST',
-            url: '/cruzeiro_m7/dialogflow/query/',
+            url: '/dialogflow/query/',
             data: {
                 queryText: queryText,
                 sessionId: sessionId,
